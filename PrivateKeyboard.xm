@@ -9,29 +9,22 @@
 -(BOOL)lightKeyboard;
 @end
 
-@interface UITextField (Private)
-@property (nonatomic, readwrite) int keyboardAppearance;
-@property (nonatomic, readwrite) int keyboardType;
--(id)inputView;
+@interface UIKBTextStyle : NSObject
+-(id)textColor;
 @end
 
-@interface UnifiedField : UITextField <UIGestureRecognizerDelegate>
-@property(retain, nonatomic) UIView *placeholderCenteringReferenceView;
-@property(copy, nonatomic) UIColor *placeholderColor;
--(id)initWithFrame:(struct CGRect)arg1;
--(BOOL)becomeFirstResponder;
--(BOOL)resignFirstResponder;
--(void)layoutSubviews;
--(void)setPlaceholder:(id)arg1;
--(BOOL)gestureRecognizer:(id)arg1 shouldReceiveTouch:(id)arg2;
--(id)defaultPlaceholderColor;
-@end
+%hook UIKBRenderConfig 
 
-%hook UnifiedField
+-(BOOL)lightKeyboard{
+	return ![[%c(BrowserController) sharedBrowserController] privateBrowsingEnabled];
+}
 
--(BOOL)becomeFirstResponder{
-	NSLog(@"[][][][][][ become: %li, %@", (long)[self keyboardAppearance], [self inputView]);
-	return %orig();
+%end
+
+%hook UIKBTextStyle
+
+-(id)textColor{
+	return [[%c(BrowserController) sharedBrowserController] privateBrowsingEnabled] ? [UIColor whiteColor] : [UIColor blackColor];
 }
 
 %end
