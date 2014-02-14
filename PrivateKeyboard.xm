@@ -43,7 +43,15 @@
 }
 
 -(float)keycapOpacity{
-	return [[%c(BrowserController) sharedBrowserController] privateBrowsingEnabled] ? 0.0 : CGFLOAT_MIN;
+	float replacement = [self lightKeyboard] ? 0.0 : CGFLOAT_MIN;
+	NSLog(@"[PrivateKeyboard] Original cap %f replaced with %f.", %orig, replacement);
+	return replacement;
+}
+
+-(float)keyborderOpacity{
+	float replacement = [self lightKeyboard] ? 0.0 : CGFLOAT_MIN;
+	NSLog(@"[PrivateKeyboard] Original border %f replaced with %f.", %orig, replacement);
+	return replacement;
 }
 
 %end
