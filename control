@@ -2,7 +2,7 @@ Package: com.insanj.privatekeyboard
 Name: PrivateKeyboard
 Pre-Depends: firmware (>= 7.0)
 Depends: mobilesubstrate
-Version: 0.1
+Version: 1.0
 Architecture: iphoneos-arm
 Description: Dark Private Browsing keyboard.
 Maintainer: Julian Weiss <me@insanj.com>

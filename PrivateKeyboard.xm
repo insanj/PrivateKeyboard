@@ -3,28 +3,18 @@
 @interface BrowserController
 +(id)sharedBrowserController;
 -(BOOL)privateBrowsingEnabled;
--(void)_setPrivateBrowsingEnabled:(BOOL)arg1;
 @end
 
-@interface UIKBRenderConfig : NSObject
--(BOOL)lightKeyboard;
+@interface UITextField (Private)
+@property (nonatomic, readwrite) int keyboardAppearance;
 @end
 
-%hook BrowserController
+%hook UITextInputTraits 
 
--(void)_setPrivateBrowsingEnabled:(BOOL)arg1{
-	%orig();
-	NSError *deleteError;
-	BOOL deletedWorked = [[NSFileManager defaultManager] removeItemAtPath:@"/var/mobile/Library/Caches/com.apple.keyboards" error:&deleteError];
-	NSLog(@"[PrivateKeyboard] Attempted to remove cache, result: %@, errors: %@", deletedWorked ? @"GOOD" : @"BAD", deleteError);
-}
-
-%end
-
-%hook UIKBRenderConfig 
-
--(BOOL)lightKeyboard{
-	return ![[%c(BrowserController) sharedBrowserController] privateBrowsingEnabled];
+-(int)keyboardAppearance{
+	int privateBrowsing = [[%c(BrowserController) sharedBrowserController] privateBrowsingEnabled];
+	NSLog(@"[PrivateKeyboard] Overriding appearance, was %i, is now %i.", %orig, privateBrowsing);
+	return privateBrowsing;
 }
 
 %end
