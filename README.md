@@ -1,11 +1,11 @@
 PrivateKeyboard
 =======================
 
-Dark keyboard when Private Browsing in Safari.
+Dark keyboard when using the Unified Bar while Private Browsing (Safari).
 
 ---------------------------------------
 	Simplified BSD License
-	Copyright (c) 2013, Julian Weiss
+	Copyright (c) 2014, Julian Weiss
 	All rights reserved.
 
 	Redistribution and use in source and binary forms, with or without
